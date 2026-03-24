@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Rivera · Data Analyst</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --border:    #2a2d3e;
+      --accent:    #6c63ff;
+      --accent2:   #00d4aa;
+      --text:      #e8eaf0;
+      --muted:     #8b90a7;
+      --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --font-mono: 'Courier New', monospace;
+      --radius:    12px;
+      --max-w:     900px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ─── Layout helpers ─── */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section { padding: 96px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ─── Hero ─── */
+    .hero {
+      padding: 120px 0 96px;
+      border-top: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      color: var(--accent2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 2px;
+      background: var(--accent2);
+      border-radius: 2px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+
+    .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn:hover { transform: translateY(-2px); text-decoration: none; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(108, 99, 255, 0.35);
+    }
+
+    .btn-primary:hover { box-shadow: 0 6px 28px rgba(108, 99, 255, 0.5); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── Stats strip ─── */
+    .stats {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      padding: 40px 0 0;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ─── Section headings ─── */
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 16px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 56px;
+    }
+
+    /* ─── About ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-text p + p { margin-top: 16px; }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .skill-tag {
+      padding: 6px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    .about-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .highlight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .highlight-card:hover { border-color: var(--accent); }
+
+    .highlight-card .icon { font-size: 1.4rem; margin-bottom: 8px; }
+    .highlight-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .highlight-card p { font-size: 0.85rem; color: var(--muted); }
+
+    /* ─── Projects ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(108, 99, 255, 0.12);
+    }
+
+    .project-icon { font-size: 1.8rem; }
+
+    .project-card h3 { font-size: 1rem; font-weight: 700; }
+
+    .project-card p { font-size: 0.87rem; color: var(--muted); flex: 1; }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      padding: 3px 10px;
+      background: rgba(108, 99, 255, 0.12);
+      color: var(--accent);
+      border-radius: 4px;
+    }
+
+    .project-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    /* ─── Contact ─── */
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 56px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-box h2 { margin-bottom: 16px; }
+
+    .contact-box p {
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-box { padding: 36px 24px; }
+      .stats { gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">alex<span>.</span>dev</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Available for opportunities</p>
+    <h1>Turning raw data into<br><span class="highlight">clear decisions.</span></h1>
+    <p class="hero-sub">
+      Data Analyst with 4+ years experience in Python, SQL, and Tableau —
+      helping teams move from gut feel to evidence-based strategy.
+    </p>
+    <div class="btn-group">
+      <a href="#projects" class="btn btn-primary">View My Work →</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+    <div class="stats">
+      <div>
+        <div class="stat-value">40+</div>
+        <div class="stat-label">Projects delivered</div>
+      </div>
+      <div>
+        <div class="stat-value">4 yrs</div>
+        <div class="stat-label">Industry experience</div>
+      </div>
+      <div>
+        <div class="stat-value">12+</div>
+        <div class="stat-label">Tools &amp; technologies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="container">
+    <p class="section-tag">// about me</p>
+    <h2>Analyst by trade,<br>storyteller by instinct.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm Alex Rivera, a data analyst based in San Francisco.
+          I specialize in translating messy, complex datasets into dashboards
+          and reports that actually drive decisions — not just decorate slide decks.
+        </p>
+        <p>
+          My background spans e-commerce, SaaS, and fintech, where I've built
+          pipelines, automated reporting, and led data literacy initiatives
+          across non-technical teams.
+        </p>
+        <p>
+          When I'm not wrangling dataframes, I'm usually hiking, reading
+          about behavioral economics, or contributing to open-source tools.
+        </p>
+        <div class="skills-list">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">dbt</span>
+          <span class="skill-tag">pandas</span>
+          <span class="skill-tag">BigQuery</span>
+          <span class="skill-tag">Looker</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">Airflow</span>
+        </div>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-card">
+          <div class="icon">📊</div>
+          <h3>Dashboard Design</h3>
+          <p>Built 20+ executive dashboards that reduced weekly reporting time by 60%.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon">🔁</div>
+          <h3>Pipeline Automation</h3>
+          <p>Automated ETL workflows using Python + Airflow, cutting manual work from days to minutes.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon">🎓</div>
+          <h3>Data Literacy</h3>
+          <p>Ran workshops for 80+ non-technical staff, increasing self-serve BI adoption by 45%.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ── -->
+<section id="projects">
+  <div class="container">
+    <p class="section-tag">// selected projects</p>
+    <h2>Things I've built.</h2>
+    <p class="section-intro">
+      A sample of analyses, pipelines, and tools — from exploratory work to production systems.
+    </p>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">🛒</div>
+        <h3>Retail Churn Predictor</h3>
+        <p>ML model to identify at-risk customers 30 days before churn, integrated with CRM alerts.</p>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">sklearn</span>
+          <span class="project-tag">SQL</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">📈</div>
+        <h3>Revenue Attribution Dashboard</h3>
+        <p>Multi-touch attribution model visualised in Tableau for a $40M ARR SaaS company.</p>
+        <div class="project-tags">
+          <span class="project-tag">Tableau</span>
+          <span class="project-tag">BigQuery</span>
+          <span class="project-tag">dbt</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🏦</div>
+        <h3>Fintech Fraud Signals</h3>
+        <p>Exploratory analysis that surfaced 3 novel fraud patterns, saving ~$2M in disputed transactions.</p>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">pandas</span>
+          <span class="project-tag">Plotly</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">⚡</div>
+        <h3>Automated ETL Pipeline</h3>
+        <p>End-to-end data pipeline ingesting 8 sources into a unified warehouse with daily SLA.</p>
+        <div class="project-tags">
+          <span class="project-tag">Airflow</span>
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Postgres</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🌍</div>
+        <h3>Global Sales Heatmap</h3>
+        <p>Interactive geospatial dashboard tracking regional performance across 30 countries.</p>
+        <div class="project-tags">
+          <span class="project-tag">Tableau</span>
+          <span class="project-tag">SQL</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🧪</div>
+        <h3>A/B Testing Framework</h3>
+        <p>Reusable statistical testing toolkit for product teams — Bayesian + frequentist approaches.</p>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">R</span>
+          <span class="project-tag">Statistics</span>
+        </div>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <p class="section-tag">// contact</p>
+      <h2>Let's work together.</h2>
+      <p>
+        Open to full-time roles, freelance projects, and consulting.
+        If you have data problems that need solving, I'd love to hear from you.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:alex@example.com" class="btn btn-primary">✉ Email Me</a>
+        <a href="https://linkedin.com/in/alexrivera" class="btn btn-outline">LinkedIn</a>
+        <a href="https://github.com/alexrivera" class="btn btn-outline">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>© 2026 Alex Rivera · Built with HTML &amp; CSS · No frameworks needed.</p>
+</footer>
+
+</body>
+</html>
